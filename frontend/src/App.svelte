@@ -1,16 +1,18 @@
 <script>
-    /* global isProduction */
-    export let appname
-    export const name = 'World'
-    const status = isProduction
+import Router from 'svelte-spa-router'
+import Login from './Login.svelte'
+import Register from './Register.svelte'
+
+const routes = {
+    '/register': Register,
+    '/login': Login,
+    '*': Login
+}
 </script>
 
 <main>
-    <h1>{appname}: Hello {name} {#if !status}[dev-mode]{/if}</h1>
+    <h1>App</h1>
+
+    <Router {routes}/>
 </main>
 
-<style>
-h1 {
-    color: darkblue;
-}
-</style>

@@ -1,5 +1,7 @@
 ###### Requirements without Version Specifiers ######
 uvicorn
+SQLAlchemy
+python-multipart
 # SQLAlchemy
 # asgi-sessions
 

@@ -6,6 +6,8 @@ import fastapi
 import fastapi.middleware.cors
 import fastapi_utils.tasks  # type: ignore
 import uvicorn  # type: ignore
+import Database
+
 
 PERIOD = 5 * 60
 
@@ -17,10 +19,17 @@ app.add_middleware(
     allow_headers=['Content-Type'],
 )
 
+@app.post('/login')
+async def login(username = fastapi.Form(''), password = fastapi.Form('')) -> typing.Dict[str, str]:
+    token = Database.login(username, password)
+    if token is None:
+        return { 'error': 'error obtaining access token' }
+    return { 'access-token': token }
 
-@app.get('/a')
-async def a() -> typing.Dict[str, str]:
-    return { 'error': 'All ticket data is to be send via POST requests'}
+@app.post('/register')
+async def register(username = fastapi.Form(''), password = fastapi.Form('')) -> typing.Dict[str, str]:
+    user_id = Database.register(username, password)
+    return { 'registered': user_id }
 
 @app.get('/b/{year}/{week}')
 async def exams_get(year: int, week: int) -> typing.Dict[str, str]:
@@ -40,4 +49,4 @@ async def regular_check() -> None:
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s | %(levelname)s:     %(message)s', level=logging.INFO)
     logging.info('Logging started')
-    uvicorn.run(app, host='0.0.0.0')
+    uvicorn.run(app, host='0.0.0.0', port=5001)
