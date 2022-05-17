@@ -2,10 +2,12 @@
 import Router from 'svelte-spa-router'
 import Login from './Login.svelte'
 import Register from './Register.svelte'
+import Home from './Home.svelte'
 
 const routes = {
-    '/register': Register,
     '/login': Login,
+    '/register': Register,
+    '/home': Home,
     '*': Login
 }
 </script>
