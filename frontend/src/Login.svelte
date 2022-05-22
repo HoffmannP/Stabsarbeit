@@ -1,11 +1,13 @@
 <script>
-async function submit(submitEvent) {
-    const method = 'POST'
-    const body = new FormData(this)
-    await fetch('https://localhost:5002/login', { method, body }).then(j => j.json())
-    document.location.hash = '#/home'
-    return false
-}
+    export let backend
+
+    async function submit(submitEvent) {
+        const method = 'POST'
+        const body = new FormData(this)
+        await fetch(`${backend}/login`, { method, body, credentials: 'include' }).then(j => j.json())
+        document.location.hash = '#/home'
+        return false
+    }
 </script>
 
 <main>
