@@ -4,10 +4,11 @@
     [ ] referenzieren
 
 # Tagebuch
-    [ ] Speichern
+    [x] Speichern im Browser
+    [x] Exportieren
+    [ ] Speichern im Server
     [ ] Metadaten
     [ ] Beenden
-    [ ] Exportieren
 
 # Einsätze
     [ ] erkennen

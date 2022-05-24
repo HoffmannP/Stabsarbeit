@@ -1,22 +1,28 @@
 <script>
-import { onMount } from "svelte";
+    import Export from './Export.svelte'
+    import { onMount } from 'svelte';
+    import { Client as ClientStorage } from './storage'
+
     export let params = {}
     export let backend = ''
+    const storage = ClientStorage('Tagebuch')
     let entries = []
     let index = 0
     let input
 
     let start = new Date()
-    let dtFormatOptions = { timeStyle: "short" }
+    let dtFormatOptions = { timeStyle: 'short' }
     $: dtFormat = new Intl.DateTimeFormat('de-DE', dtFormatOptions)
     let currentTime = new Date()
 
-    onMount(function () {
+    onMount(async function () {
         setTimeout(function () {
             currentTime = new Date()
-            setInterval(_ => (currentTime = new Date()), 60000)
-        }, 60050 - currentTime.getSeconds() * 1000)
+            setInterval(_ => (currentTime = new Date()), 60*1e3)
+        }, 60050 - currentTime.getSeconds() * 1e3)
         input.focus()
+        entries = await storage.load()
+        index = entries.length
     })
 
     async function checkEntry (keypressEvent) {
@@ -24,10 +30,11 @@ import { onMount } from "svelte";
             return
         }
         entries[index] = {
-            date: currentTime,
+            date: currentTime.getTime(),
             text: input.value.trim()
         }
         this.value = ''
+        storage.add(index, entries[index])
 
         if (index === 0) {
             start = new Date(entries[0].date)
@@ -40,18 +47,28 @@ import { onMount } from "svelte";
 </script>
 
 <main>
+    <nav class="uk-navbar-container" uk-navbar uk-sticky>
+        <div class="uk-navbar-left">
+            <a href="/tagebuch" class="uk-button uk-button-default">Tagebuch</a>
+            <a href="/einsatz" class="uk-button uk-button-default">Einsätze</a>
+            <a href="/einheit" class="uk-button uk-button-default">Einheiten</a>
+        </div>
+        <div class="uk-navbar-right">
+            <Export {entries}><span uk-icon="download"></span> Download</Export>
+        </div>
+    </nav>
     <table class="uk-table uk-table-striped">
         <tbody>
-            {#each entries as entry, id}
+            {#each entries as entry, index}
             <tr>
-                <th class="uk-table-shrink">{id}</th>
+                <th class="uk-table-shrink">{index + 1}</th>
                 <td class="uk-table-shrink">{dtFormat.format(new Date(entry.date))}</td>
                 <td>{entry.text}</td>
             </tr>
             {/each}
             <tr>
-                <th class="uk-table-shrink">{index}</th>
-                <td class="uk-table-shrink">{dtFormat.format(currentTime)}</td>
+                <th class="uk-table-shrink">{index + 1}</th>
+                <td class="uk-table-shrink uk-text-primary">{dtFormat.format(currentTime)}</td>
                 <td><input bind:this={input} type="text" on:keypress={checkEntry}></td>
             </tr>
         </tbody>
