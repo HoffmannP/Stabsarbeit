@@ -1,18 +1,10 @@
 <script>
-    import Export from './Export.svelte'
     import { onMount } from 'svelte';
-    import { Client as ClientStorage } from './storage'
+    import { entries, addEntry, setDtFormat, dtFormat } from './store'
 
-    export let params = {}
-    export let backend = ''
-    const storage = ClientStorage('Tagebuch')
-    let entries = []
-    let index = 0
     let input
 
     let start = new Date()
-    let dtFormatOptions = { timeStyle: 'short' }
-    $: dtFormat = new Intl.DateTimeFormat('de-DE', dtFormatOptions)
     let currentTime = new Date()
 
     onMount(async function () {
@@ -21,55 +13,41 @@
             setInterval(_ => (currentTime = new Date()), 60*1e3)
         }, 60050 - currentTime.getSeconds() * 1e3)
         input.focus()
-        entries = await storage.load()
-        index = entries.length
     })
 
-    async function checkEntry (keypressEvent) {
+    async function checkSubmit (keypressEvent) {
         if (keypressEvent.key !== 'Enter') {
             return
         }
-        entries[index] = {
+        addEntry({
             date: currentTime.getTime(),
-            text: input.value.trim()
+            text: input.value.trim(),
+        })
+        if ($entries.length === 1) {
+            start = new Date($entries[0].date)
         }
         this.value = ''
-        storage.add(index, entries[index])
 
-        if (index === 0) {
-            start = new Date(entries[0].date)
-        }
         if (currentTime.getDay() != start.getDay()) {
-            dtFormatOptions = { weekday: 'short', hour: '2-digit', minute: '2-digit' }
+            setDtFormat({ weekday: 'short', hour: '2-digit', minute: '2-digit' })
         }
-        index++
     }
 </script>
 
 <main>
-    <nav class="uk-navbar-container" uk-navbar uk-sticky>
-        <div class="uk-navbar-left">
-            <a href="/tagebuch" class="uk-button uk-button-default">Tagebuch</a>
-            <a href="/einsatz" class="uk-button uk-button-default">Einsätze</a>
-            <a href="/einheit" class="uk-button uk-button-default">Einheiten</a>
-        </div>
-        <div class="uk-navbar-right">
-            <Export {entries}><span uk-icon="download"></span> Download</Export>
-        </div>
-    </nav>
     <table class="uk-table uk-table-striped">
         <tbody>
-            {#each entries as entry, index}
+            {#each $entries as entry, index}
             <tr>
                 <th class="uk-table-shrink">{index + 1}</th>
-                <td class="uk-table-shrink">{dtFormat.format(new Date(entry.date))}</td>
+                <td class="uk-table-shrink">{$dtFormat.format(new Date(entry.date))}</td>
                 <td>{entry.text}</td>
             </tr>
             {/each}
             <tr>
-                <th class="uk-table-shrink">{index + 1}</th>
-                <td class="uk-table-shrink uk-text-primary">{dtFormat.format(currentTime)}</td>
-                <td><input bind:this={input} type="text" on:keypress={checkEntry}></td>
+                <th class="uk-table-shrink">{$entries.length + 1}</th>
+                <td class="uk-table-shrink uk-text-primary">{$dtFormat.format(currentTime)}</td>
+                <td><input bind:this={input} type="text" on:keypress={checkSubmit}></td>
             </tr>
         </tbody>
     </table>

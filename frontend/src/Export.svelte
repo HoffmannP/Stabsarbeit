@@ -1,17 +1,14 @@
 <script>
     import { utils as xlsxUtils, writeFile } from 'xlsx/xlsx.mjs'
-    export let entries
-    export let category = 'default'
-    let dtFormatOptions = { dateStyle: 'short', timeStyle: 'short' }
-    $: dtFormat = new Intl.DateTimeFormat('de-DE', dtFormatOptions)
+    import { entries, dtFormat } from './store.js'
+    export let priority = 'default'
 
 
     async function download () {
-        console.log('Los gehts')
         const wb = xlsxUtils.book_new()
         const ws = xlsxUtils.aoa_to_sheet(
             [['Nummer', 'Zeitpunkt', 'Eintrag']].concat(
-                entries.map((entry, index) => [index + 1, dtFormat.format(new Date(entry.date)), entry.text])
+                $entries.map((entry, index) => [index + 1, $dtFormat.format(new Date(entry.date)), entry.text])
             )
         )
         xlsxUtils.book_append_sheet(wb, ws, 'Einsatztagebuch')
@@ -19,6 +16,6 @@
     }
 </script>
 
-<button class="uk-button {`uk-button-${category}`}" on:click={download}>
+<button class="uk-button {`uk-button-${priority}`}" on:click={download}>
     <slot></slot>
 </button>
