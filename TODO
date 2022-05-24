@@ -1,31 +1,33 @@
-# Tabelleneinträge
-    [?] Eintrage editieren
-    [?] löschen & ersetzen
+Tabelleneinträge:
+    [ ] Eintrage editieren @maybe
+    [ ] löschen & ersetzen @maybe
     [ ] referenzieren
 
-# Tagebuch
-    [x] Speichern im Browser
-    [x] Exportieren
+Tagebuch:
+    [✔] Speichern im Browser @done(22-05-23 12:00)
+    [✔] Exportieren @done(22-05-24 15:00)
     [ ] Speichern im Server
     [ ] Metadaten
     [ ] Beenden
 
-# Einsätze
+Einheiten:
+    [✓] erkennen @done(22-05-25 00:43)
+    [✓] auflisten @done(22-05-25 00:43)
+    [ ] Hervorheben/Ersetzen
+    [ ] aktueller Ort
+    [ ] Einsatzzeit
+    [ ] Sitzbereitschaft/zurück auf Wache
+    [ ] Vorladen/Speichern
+    [ ] bearbeiten
+    [ ] Mannschaftstärke
+    [ ] Autocomplete
+    [ ] Autom. Haus und Fahrzeugtyp anzeigen
+
+Einsätze:
     [ ] erkennen
     [ ] auflisten
     [ ] bearbeiten
     [ ] Timeline
 
-# Einheiten
-    [ ] erkennen
-    [ ] auflisten
-    [ ] Vorladen/Speichern
-    [ ] bearbeiten
-    [ ] aktueller Ort
-    [ ] Mannschaftstärke
-    [ ] Einsatzzeit
-    [ ] Autom. Haus anzeigen
-    [ ] Sitzbereitschaft/zurück auf Wache
-
-# Bugs
-    [ ] Tagebuchliste scrollt nicht
+Bugs:
+    [ ] Tagebuchliste scrollt nicht
