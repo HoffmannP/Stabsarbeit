@@ -1,6 +1,7 @@
 <script>
     import { utils as xlsxUtils, writeFile } from 'xlsx/xlsx.mjs'
-    import { entries, dtFormat } from './store.js'
+    import { entries } from './store.js'
+    import dtFormater from './dateTimeFormat'
     export let priority = 'default'
 
 
@@ -8,7 +9,7 @@
         const wb = xlsxUtils.book_new()
         const ws = xlsxUtils.aoa_to_sheet(
             [['Nummer', 'Zeitpunkt', 'Eintrag']].concat(
-                $entries.map((entry, index) => [index + 1, $dtFormat.format(new Date(entry.date)), entry.text])
+                $entries.map((entry, index) => [index + 1, $dtFormater(new Date(entry.date)), entry.text])
             )
         )
         xlsxUtils.book_append_sheet(wb, ws, 'Einsatztagebuch')

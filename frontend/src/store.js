@@ -14,15 +14,6 @@ export const entries = readable([], async set => {
   set(await storage.load())
 })
 
-export let setDtFormat
-export const dtFormatOptions = readable({ timeStyle: 'short' }, set => {
-  setDtFormat = format => set(format)
-})
-export const dtFormat = derived(
-  dtFormatOptions,
-  options => new Intl.DateTimeFormat('de-DE', options)
-)
-
 const unitRegExp = /\d+-\d\d-\d+/g
 export const units = derived(
   entries,
