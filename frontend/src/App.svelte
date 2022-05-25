@@ -1,12 +1,14 @@
 <script>
 import Router from 'svelte-spa-router'
-import {wrap} from 'svelte-spa-router/wrap'
+import { wrap } from 'svelte-spa-router/wrap'
+import active from 'svelte-spa-router/active'
+
 import NotFound from './NotFound.svelte'
 
 import Tagebuch from './Tagebuch.svelte'
 import Einsätze from './Einsätze.svelte'
 import Einheiten from './Einheiten.svelte'
-import Export from './Export.svelte'
+import download from './download'
 
 const globalProp = component => wrap({ component, props: {
     // backend = 'http://localhost:5001/api/v1'
@@ -23,12 +25,16 @@ const routes = {
 <main>
     <nav class="uk-navbar-container" uk-navbar uk-sticky>
         <div class="uk-navbar-left">
-            <a href="#/tagebuch" class="uk-button uk-button-default">Tagebuch</a>
-            <a href="#/einsaetze" class="uk-button uk-button-default">Einsätze</a>
-            <a href="#/einheiten" class="uk-button uk-button-default">Einheiten</a>
+            <ul class="uk-navbar-nav">
+                <li use:active={{path: '/tagebuch',  className: 'uk-active'}}><a href="#/tagebuch">Tagebuch</a></li>
+                <li use:active={{path: '/einsaetze', className: 'uk-active'}}><a href="#/einsaetze">Einsätze</a></li>
+                <li use:active={{path: '/einheiten', className: 'uk-active'}}><a href="#/einheiten">Einheiten</a></li>
+            </ul>
         </div>
         <div class="uk-navbar-right">
-            <Export priority="default"><span uk-icon="download"></span> Download</Export>
+            <button class="uk-navbar-item uk-logo" on:click={download}>
+                <span uk-icon="download"></span> Download
+            </button>
         </div>
     </nav>
 

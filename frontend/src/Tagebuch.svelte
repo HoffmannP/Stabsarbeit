@@ -21,24 +21,22 @@
     }
 </script>
 
-<main>
-    <table class="uk-table uk-table-striped">
-        <tbody>
-            {#each $entries as entry, index}
-            <tr>
-                <th class="uk-table-shrink">{index + 1}</th>
-                <td class="uk-table-shrink">{$dtFormater(new Date(entry.date))}</td>
-                <td>{entry.text}</td>
-            </tr>
-            {/each}
-            <tr>
-                <th class="uk-table-shrink">{$entries.length + 1}</th>
-                <td class="uk-table-shrink uk-text-primary">{$dtFormater($currentTime)}</td>
-                <td><input bind:this={input} type="text" on:keypress={checkSubmit}></td>
-            </tr>
-        </tbody>
-    </table>
-</main>
+<table class="uk-table uk-table-striped">
+    <tbody>
+        {#each $entries as entry, index}
+        <tr>
+            <th class="uk-table-shrink">{index + 1}</th>
+            <td class="uk-table-shrink">{$dtFormater(new Date(entry.date))}</td>
+            <td>{entry.text}</td>
+        </tr>
+        {/each}
+        <tr>
+            <th class="uk-table-shrink">{$entries.length + 1}</th>
+            <td class="uk-table-shrink uk-text-primary">{$dtFormater($currentTime)}</td>
+            <td><input bind:this={input} type="text" on:keypress={checkSubmit}></td>
+        </tr>
+    </tbody>
+</table>
 
 <style>
     table input {

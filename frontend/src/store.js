@@ -3,15 +3,14 @@ import { Client as ClientStorage } from './storage'
 
 const storage = ClientStorage('Tagebuch')
 export let addEntry
-export let initEntries
-export const entries = readable([], async set => {
+export const entries = readable([], set => {
   addEntry = function (entry) {
     const currentEntries = get(entries)
     storage.add(currentEntries.length, entry)
     currentEntries.push(entry)
     set(currentEntries)
   }
-  set(await storage.load())
+  storage.load().then(data => set(data))
 })
 
 const unitRegExp = /\d+-\d\d-\d+/g
