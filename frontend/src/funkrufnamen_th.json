@@ -1,0 +1,90 @@
+{
+    "Leitungs- und Führungspersonal": {
+        "00": ["Zentrale Leitstele", "Leitstelle"],
+        "01": ["KBI", "Ltr. BF", "Amts- und Fachdienstleiter", "OBM", "SBM"],
+        "02": ["KBM"],
+        "03": ["S 6"],
+        "09": ["BSW"]
+    },
+    "Fahrzeuge der Einsatzleitung und Mannschaftstransportwagen": {
+        "10": "KdoW",
+        "11": ["ELW 1", "FüKw-Th", "ELW ATF"],
+        "12": ["ELW 2", "ELW 3"],
+        "13": ["GW-IuK", "FuKW", "FmKW", "FMF Fu"],
+        "14": ["MZF", "PKW"],
+        "15": ["Krad", "Quad"],
+        "16": ["LuB"],
+        "19": ["MTW"]
+    },
+    "Tank- und Sonderlöschfahrzeuge": {
+        "21": ["TLF 8/18", "TLF 2000"],
+        "22": ["TLF 16/24", "TLF 16/25"],
+        "23": ["TLF 3000"],
+        "24": ["TLF 24/48", "TLF 24/50", "TLF 20/40 (SL)", "TLF 4000"],
+        "25": ["GTLF", "FLF"]
+    },
+    "Hubrettungsfahrzeuge und Arbeitsgeräte für große Höhe": {
+        "31": ["DL 12/9", "DLK 12/9", "DL(A)K 12/9"],
+        "32": ["DL 18/12", "DLK 18/12", "DL(A)K 18/12"],
+        "33": ["DL 23/12", "DLK 23/12", "DL(A)K 23/12"],
+        "34": ["HAB"],
+        "35": ["HAB", "GM"],
+        "36": ["HAB"],
+        "38": ["FwK"]
+    },
+    "Löschgruppen und Löschstaffelfahrzeuge": {
+        "40": ["TSF", "KLF", "VLF", "LF 8", "KLF-Th"],
+        "41": ["TSF-W", "StLF 10/6", "MLF"],
+        "42": ["LF 8/6", "LF 10/6", "LF 10"],
+        "43": ["HLF 10/6", "HLF 10"],
+        "44": ["LF 16/12", "HLF 20/16", "HLF 20"],
+        "45": ["LF 20KatS"],
+        "46": ["LF 24", "LF 20"],
+        "49": ["LF 16-TS"]
+    },
+    "Fahrzeuge für den ABC- und Gefahrguteinsatz": {
+        "52": ["Dekon V"],
+        "53": ["GW-Dekon", "GW Dekon P"],
+        "54": ["GW-G"],
+        "55": ["GW-ÖL"],
+        "56": ["GW-A", "GW-A/S"],
+        "57": ["GW-Mess"],
+        "58": ["CBRN MLK", "CBRN ErKw"]
+    },
+    "Schlauchwagen, Transport- und Logistikfahrzeuge": {
+        "61": ["SW 1000"],
+        "62": ["SW 2000", "SW 1000 Tr", "SW-KatS"],
+        "65": ["WLF 18", "WLF 26"],
+        "66": ["LKW-Lkr"],
+        "67": ["GW-L1", "LKW-Lbw"],
+        "68": ["GW-L2", "LKW-Lbw"]
+    },
+    "Rüst- und Gerätewagen sowie Wasserfahrzeuge": {
+        "70": ["VRW", "VGW"],
+        "71": ["RW 1"],
+        "72": ["RW", "RW 2", "RW 3"],
+        "73": ["KLAF", "KEF"],
+        "75": ["GW-W", "GW-Tauch"],
+        "76": ["MZB"],
+        "79": ["Bagger", "Schlepper", "Radlader"]
+    },
+    "Fahrzeuge des Rettungsdienstes": {
+        "80": ["ITW"],
+        "81": ["NAW"],
+        "82": ["NEF"],
+        "83": ["RTW"],
+        "84": ["RTH", "ITH"],
+        "85": ["KTW"],
+        "86": ["HKTW"],
+        "87": ["GKTW"]
+    },
+    "Fahrzeuge für Sanitäts- und Betreuungszwecke": {
+        "91": ["KTW-A1", "KTW-A2", "KTW-B"],
+        "92": ["KTW-4"],
+        "93": ["KTW gl"],
+        "95": ["GW San"],
+        "96": ["GW Beh"],
+        "97": ["GW Log", "ETG"],
+        "98": ["GW Bt"]
+    }
+}
