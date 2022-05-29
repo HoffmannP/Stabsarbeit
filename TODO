@@ -14,6 +14,7 @@ Einheiten:
     [✓] erkennen @done(22-05-25 00:43)
     [✓] auflisten @done(22-05-25 00:43)
     [ ] Hervorheben/Ersetzen
+    [ ] Einheitsgruppen (Lösch-/Gefahrgutzug)
     [ ] aktueller Ort
     [ ] Einsatzzeit
     [ ] Sitzbereitschaft/zurück auf Wache
@@ -28,6 +29,7 @@ Einsätze:
     [ ] auflisten
     [ ] bearbeiten
     [ ] Timeline
+    [ ] Dritte (Telekom, Bahn, KSJ, Pol, Jagdpächter, Tierheim)
 
 Bugs:
     [ ] Tagebuchliste scrollt nicht

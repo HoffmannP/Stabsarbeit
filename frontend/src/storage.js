@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-class ClientLocalStorage {
+export class ClientLocalStorage {
   constructor (name) {
     this.name = index => `${name}:${index}`
   }
@@ -28,7 +28,7 @@ class ClientLocalStorage {
   }
 }
 
-class ClientIndexDB {
+export class ClientIndexDB {
   constructor (name) {
     const request = indexedDB.open(name)
     request.addEventListener('upgradeneeded', this._upgrade)
@@ -76,7 +76,3 @@ class ClientIndexDB {
     )
   }
 }
-
-export const Client = (name, { type = '' } = {}) => new (
-  type.toLowerCase().startsWith('localstorage') ? ClientLocalStorage : ClientIndexDB
-)(name)

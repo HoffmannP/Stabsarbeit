@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { entries, addEntry } from './store'
+    import { entries, addEntry } from './tagebuch'
     import currentTime from './currentTime'
     import dtFormater from './dateTimeFormat'
 
@@ -26,13 +26,13 @@
         {#each $entries as entry, index}
         <tr>
             <th class="uk-table-shrink">{index + 1}</th>
-            <td class="uk-table-shrink">{$dtFormater(new Date(entry.date))}</td>
-            <td>{entry.text}</td>
+            <td class="">{$dtFormater(new Date(entry.date))}</td>
+            <td class="">{entry.text}</td>
         </tr>
         {/each}
         <tr>
             <th class="uk-table-shrink">{$entries.length + 1}</th>
-            <td class="uk-table-shrink uk-text-primary">{$dtFormater($currentTime)}</td>
+            <td class="uk-text-primary">{$dtFormater($currentTime)}</td>
             <td><input bind:this={input} type="text" on:keypress={checkSubmit}></td>
         </tr>
     </tbody>

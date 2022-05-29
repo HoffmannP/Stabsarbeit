@@ -1,6 +1,6 @@
 import { utils as xlsxUtils, writeFile } from 'xlsx/xlsx.mjs'
 import { get } from 'svelte/store'
-import { entries } from './store'
+import { entries } from './tagebuch'
 import dtFormater from './dateTimeFormat'
 
 export default async function () {

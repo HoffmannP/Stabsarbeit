@@ -1,5 +1,5 @@
 import { derived } from 'svelte/store'
-import { entries } from './store.js'
+import { entries } from './tagebuch.js'
 
 const locales = 'de-DE'
 const oneDayFormat = { timeStyle: 'short' }
