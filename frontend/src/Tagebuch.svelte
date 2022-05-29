@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { entries, addEntry } from './tagebuch'
+    import { entries } from './tagebuch'
     import currentTime from './currentTime'
     import dtFormater from './dateTimeFormat'
 
@@ -13,21 +13,28 @@
         if (keypressEvent.key !== 'Enter') {
             return
         }
-        addEntry({
+        $entries = {
             date: $currentTime.getTime(),
             text: input.value.trim(),
-        })
+        }
         this.value = ''
     }
 </script>
 
 <table class="uk-table uk-table-striped">
+    <style>
+        unit {
+            background-color: rgb(255 0 0 / 10%);
+            padding: 0 0.2em;
+            border-radius: 0.3em;
+        }
+    </style>
     <tbody>
         {#each $entries as entry, index}
         <tr>
             <th class="uk-table-shrink">{index + 1}</th>
             <td class="">{$dtFormater(new Date(entry.date))}</td>
-            <td class="">{entry.text}</td>
+            <td class="">{@html entry.text}</td>
         </tr>
         {/each}
         <tr>

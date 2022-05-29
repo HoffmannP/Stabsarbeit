@@ -1,17 +1,19 @@
-import { readable } from 'svelte/store'
-import { entries } from './tagebuch'
+import { writable } from 'svelte/store'
+import { onNewEntry } from './tagebuch'
 
-const unitRegExp = /\d+-\d\d-\d+/g
+const matcher = /\d+-\d\d-\d+/g
+const tagname = 'unit'
 
+const unitsSet = new Set()
+const unitsWritable = writable([])
 
+onNewEntry(function (newEntry) {
+  const parts = newEntry.text.split(matcher)
+  const matches = [...newEntry.text.matchAll(matcher)].map((match) => match[0])
+  matches.forEach((unit) => unitsSet.add(unit))
+  unitsWritable.set([...unitsSet])
+  const processed = parts[0] + matches.map((match, index) => `<${tagname}>${match}</${tagname}>${parts[index + 1]}`).join()
+  return { ...newEntry, text: processed }
+})
 
-
-const deployRegExp = /E!\([^)]+\)/g
-extractor (regex, tagname) {
-  return function (entryParts) {
-    const parts = entryParts.map(part => part.split(unitRegExp)).flat()
-    const matches = entryParts.map(part => Array.from(part.matchAll(unitRegExp))).flat().map(match => match[0])
-    const construct = (parts, matches) => parts[0] + matches.map((match, index) => `<${tagname}>${match}</${tagname}>${parts[index + 1]}`).join()
-    return (parts, matches, construct)
-  }
-}
+export const units = { subscribe: unitsWritable.subscribe }

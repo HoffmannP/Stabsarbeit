@@ -1,9 +1,9 @@
-import { writeable } from 'svelte/store'
+import { writable } from 'svelte/store'
 import { ClientIndexDB } from './storage'
 
 const currentProcessedEntries = []
 
-const processedEntries = writeable([])
+const processedEntries = writable([])
 
 const rawStorage = new ClientIndexDB('Tagebuch')
 const rawSubscribers = new Set()
@@ -17,7 +17,7 @@ rawEntries.set = function (newEntry) {
   rawEntries.push(newEntry)
 
   let modifiedEntry = newEntry
-  for (const subscriber in rawSubscribers) {
+  for (const subscriber of rawSubscribers) {
     modifiedEntry = subscriber(modifiedEntry)
   }
 
@@ -29,5 +29,6 @@ export const entries = {
   set: rawEntries.set,
   subscribe: processedEntries.subscribe
 }
+export const onNewEntry = rawEntries.subscribe
 
 window.setTimeout(_ => rawStorage.load().then(data => data.forEach(date => rawEntries.set(date))), 0)
