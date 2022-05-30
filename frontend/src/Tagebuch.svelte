@@ -1,13 +1,22 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, afterUpdate } from 'svelte';
     import { entries } from './tagebuch'
+    import filter from './filter'
     import currentTime from './currentTime'
     import dtFormater from './dateTimeFormat'
 
     let input
-    onMount(async function () {
+    afterUpdate(async function () {
         input.focus()
+        window.scrollTo(0, document.body.scrollHeight);
     })
+
+    $: hideEntry = (filter => function (entry) {
+        if (filter === false) {
+            return false
+        }
+        return !entry[filter.type].includes(filter.value)
+    })($filter)
 
     async function checkSubmit (keypressEvent) {
         if (keypressEvent.key !== 'Enter') {
@@ -15,7 +24,7 @@
         }
         $entries = {
             date: $currentTime.getTime(),
-            text: input.value.trim(),
+            text: this.value.trim(),
         }
         this.value = ''
     }
@@ -28,10 +37,15 @@
             padding: 0 0.2em;
             border-radius: 0.3em;
         }
+        mission {
+            background-color: rgb(0 0 255 / 10%);
+            padding: 0 0.2em;
+            border-radius: 0.3em;
+        }
     </style>
     <tbody>
         {#each $entries as entry, index}
-        <tr>
+        <tr class:uk-text-muted={hideEntry(entry)} class:uk-text-small={hideEntry(entry)}>
             <th class="uk-table-shrink">{index + 1}</th>
             <td class="">{$dtFormater(new Date(entry.date))}</td>
             <td class="">{@html entry.text}</td>

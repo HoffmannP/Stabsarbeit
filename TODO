@@ -1,6 +1,7 @@
 Tabelleneinträge:
-    [ ] Eintrage editieren @maybe
+    [ ] editieren @maybe
     [ ] löschen & ersetzen @maybe
+    [✓] filtern @done(22-05-30 10:15)
     [ ] referenzieren
 
 Tagebuch:
@@ -13,7 +14,7 @@ Tagebuch:
 Einheiten:
     [✓] erkennen @done(22-05-25 00:43)
     [✓] auflisten @done(22-05-25 00:43)
-    [ ] Hervorheben/Ersetzen
+    [✓] Hervorheben/Ersetzen @done(22-05-30 11:59)
     [ ] Einheitsgruppen (Lösch-/Gefahrgutzug)
     [ ] aktueller Ort
     [ ] Einsatzzeit
@@ -25,8 +26,8 @@ Einheiten:
     [ ] Autom. Haus und Fahrzeugtyp anzeigen
 
 Einsätze:
-    [ ] erkennen
-    [ ] auflisten
+    [✓] erkennen @done(22-05-30 11:59)
+    [✓] auflisten @done(22-05-30 11:59)
     [ ] bearbeiten
     [ ] Timeline
     [ ] Dritte (Telekom, Bahn, KSJ, Pol, Jagdpächter, Tierheim)

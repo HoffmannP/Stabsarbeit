@@ -8,6 +8,7 @@ import NotFound from './NotFound.svelte'
 import Tagebuch from './Tagebuch.svelte'
 import Einsätze from './Einsätze.svelte'
 import Einheiten from './Einheiten.svelte'
+import Filter from './Filter.svelte'
 import download from './download'
 
 const globalProp = component => wrap({ component, props: {
@@ -29,10 +30,11 @@ const routes = {
                 <li use:active={{path: '/tagebuch',  className: 'uk-active'}}><a href="#/tagebuch">Tagebuch</a></li>
                 <li use:active={{path: '/einsaetze', className: 'uk-active'}}><a href="#/einsaetze">Einsätze</a></li>
                 <li use:active={{path: '/einheiten', className: 'uk-active'}}><a href="#/einheiten">Einheiten</a></li>
+                <Filter />
             </ul>
         </div>
         <div class="uk-navbar-right">
-            <button class="uk-navbar-item uk-logo" on:click={download}>
+            <button class="uk-navbar-item uk-button uk-button-link" on:click={download}>
                 <span uk-icon="download"></span> Download
             </button>
         </div>

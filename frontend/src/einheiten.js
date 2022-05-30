@@ -13,7 +13,7 @@ onNewEntry(function (newEntry) {
   matches.forEach((unit) => unitsSet.add(unit))
   unitsWritable.set([...unitsSet])
   const processed = parts[0] + matches.map((match, index) => `<${tagname}>${match}</${tagname}>${parts[index + 1]}`).join()
-  return { ...newEntry, text: processed }
+  return { ...newEntry, text: processed, units: matches }
 })
 
 export const units = { subscribe: unitsWritable.subscribe }

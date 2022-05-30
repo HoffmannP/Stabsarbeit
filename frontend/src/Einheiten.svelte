@@ -1,11 +1,16 @@
 <script>
-    // import { units } from './store'
+    import { units } from './einheiten'
 </script>
 
-<ul>
-    <!--
-    {#each $units as unit, index}
-        <li>{unit}</li>
-    {/each}
-    -->
-</ul>
+<div class="uk-container">
+    <h3>Einheiten</h3>
+    <ul>
+        {#each $units as unit}
+            <li>{unit}</li>
+        {/each}
+    </ul>
+</div>
+
+<style>
+
+</style>
