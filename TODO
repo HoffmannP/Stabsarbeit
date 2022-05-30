@@ -1,29 +1,32 @@
 Tabelleneinträge:
-    [ ] editieren @maybe
-    [ ] löschen & ersetzen @maybe
-    [✓] filtern @done(22-05-30 10:15)
-    [ ] referenzieren
-
-Tagebuch:
-    [✔] Speichern im Browser @done(22-05-23 12:00)
-    [✔] Exportieren @done(22-05-24 15:00)
+    [ ] Neu starten / neuer Einsatz
     [ ] Speichern im Server
     [ ] Metadaten
     [ ] Beenden
+    [ ] Link zu GitHub, Autor, Lizenz @created(22-05-30 12:27)
+
+Tagebuch:
+    [✔] speichern im Browser @done(22-05-23 12:00)
+    [✔] exportieren @done(22-05-24 15:00)
+    [✓] filtern @done(22-05-30 10:15)
+    [ ] referenzieren
+    [ ] editieren @maybe
+    [ ] löschen & ersetzen @maybe
 
 Einheiten:
     [✓] erkennen @done(22-05-25 00:43)
     [✓] auflisten @done(22-05-25 00:43)
-    [✓] Hervorheben/Ersetzen @done(22-05-30 11:59)
-    [ ] Einheitsgruppen (Lösch-/Gefahrgutzug)
-    [ ] aktueller Ort
-    [ ] Einsatzzeit
-    [ ] Sitzbereitschaft/zurück auf Wache
-    [ ] Vorladen/Speichern
+    [✓] hervorheben/ersetzen @done(22-05-30 11:59)
     [ ] bearbeiten
-    [ ] Mannschaftstärke
     [ ] Autocomplete
-    [ ] Autom. Haus und Fahrzeugtyp anzeigen
+    [ ] Status erkennen
+        [ ] aktueller Ort
+        [ ] Einsatzzeit
+        [ ] Sitzbereitschaft/zurück auf Wache
+    [ ] Mannschaftstärke
+    [ ] Vorladen/Speichern
+        [ ] Autom. Haus und Fahrzeugtyp anzeigen
+        [ ] Einheitsgruppen (Lösch-/Gefahrgutzug)
 
 Einsätze:
     [✓] erkennen @done(22-05-30 11:59)
@@ -33,4 +36,6 @@ Einsätze:
     [ ] Dritte (Telekom, Bahn, KSJ, Pol, Jagdpächter, Tierheim)
 
 Bugs:
-    [ ] Tagebuchliste scrollt nicht
+    [✓] Tagebuchliste scrollt nicht @done(22-05-30 12:22)
+    [ ] CD (assets directory setzen, rsync)
+    [ ] UIKitIcons ablösen
