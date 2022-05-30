@@ -1,10 +1,7 @@
 <script>
     export let params
 
-    setTimeout(
-        _ => document.location.hash = '/tagebuch',
-        1000
-    )
+    setTimeout(_ => document.location.hash = '/tagebuch', 0)
 </script>
 
 <main>
