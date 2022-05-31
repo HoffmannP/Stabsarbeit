@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store'
-import { ClientIndexDB } from './storage'
+import { SharedStorage as Storage } from './storage'
 
 const currentProcessedEntries = []
 
 const processedEntries = writable([])
 
-const rawStorage = new ClientIndexDB('Tagebuch')
+const rawStorage = new Storage('Tagebuch')
 const rawSubscribers = new Set()
 export const rawEntries = []
 rawEntries.subscribe = function (subscriber) {

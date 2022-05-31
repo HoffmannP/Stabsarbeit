@@ -1,17 +1,19 @@
 Tabelleneinträge:
     [ ] Neu starten / neuer Einsatz
     [ ] Speichern im Server
+    [ ] Syncen mit anderer Instanz (welche Technik?)
     [ ] Metadaten
     [ ] Beenden
     [ ] Link zu GitHub, Autor, Lizenz @created(22-05-30 12:27)
 
 Tagebuch:
-    [✔] speichern im Browser @done(22-05-23 12:00)
-    [✔] exportieren @done(22-05-24 15:00)
+    [✓] speichern im Browser @done(22-05-23 12:00)
+    [✓] exportieren @done(22-05-24 15:00)
     [✓] filtern @done(22-05-30 10:15)
     [ ] referenzieren
     [ ] editieren @maybe
     [ ] löschen & ersetzen @maybe
+    [ ] Einheitendisponierungsseite
 
 Einheiten:
     [✓] erkennen @done(22-05-25 00:43)
