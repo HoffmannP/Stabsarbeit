@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { SharedStorage as Storage } from './storage'
+import { ClientIndexDB as Storage } from './storage'
 
 const currentProcessedEntries = []
 

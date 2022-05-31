@@ -9,7 +9,9 @@ import Tagebuch from './Tagebuch.svelte'
 import Einsätze from './Einsätze.svelte'
 import Einheiten from './Einheiten.svelte'
 import Filter from './Filter.svelte'
+import Sync from './Sync.svelte'
 import download from './download'
+import { DownloadIcon } from 'svelte-feather-icons'
 
 const globalProp = component => wrap({ component, props: {
     // backend = 'http://localhost:5001/api/v1'
@@ -34,8 +36,9 @@ const routes = {
             </ul>
         </div>
         <div class="uk-navbar-right">
+            <Sync />
             <button class="uk-navbar-item uk-button uk-button-link" on:click={download}>
-                <span uk-icon="download"></span> Download
+                <DownloadIcon size="20" /> Download
             </button>
         </div>
     </nav>

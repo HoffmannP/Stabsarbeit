@@ -1,5 +1,5 @@
 <script>
-    import { onMount, afterUpdate } from 'svelte';
+    import { afterUpdate } from 'svelte';
     import { entries } from './tagebuch'
     import filter from './filter'
     import currentTime from './currentTime'
