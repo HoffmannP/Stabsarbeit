@@ -1,47 +1,75 @@
 const SALT = 'STABSARBEIT'
 
 export const ALGO_STRUCTURE = ['name', 'length', 'iv']
+const KEY_DERIVE_ALGO = 'PBKDF2'
+const KEY_DERIVE_ITER = 100000
+const KEY_DERIVE_HASH = 'SHA-256'
+const KEY_ALGO = 'AES-GCM'
+const KEY_LENGTH = 256
+const CRYPT_LENGTH = 64
 
-export default class {
+class KeyApplication {
   constructor (key) {
-    this.initialized = this.initKey(key)
-    this.algorithm = {
-      name: 'AES-GCM',
-      length: 64,
-      iv: window.crypto.getRandomValues(new Uint8Array(16))
-    }
+    this._initialized = this._deriveKey(key)
   }
 
-  async initKey (key) {
+  async _deriveKey (key) {
     const te = new TextEncoder()
     const keyMaterial = await window.crypto.subtle.importKey(
       'raw',
       te.encode(key),
-      'PBKDF2',
+      KEY_DERIVE_ALGO,
       false,
       ['deriveBits', 'deriveKey']
     )
-    this.key = await window.crypto.subtle.deriveKey(
-      { name: 'PBKDF2', salt: te.encode(SALT), iterations: 100000, hash: 'SHA-256' },
+    this._key = await window.crypto.subtle.deriveKey(
+      { name: KEY_DERIVE_ALGO, salt: te.encode(SALT), iterations: KEY_DERIVE_ITER, hash: KEY_DERIVE_HASH },
       keyMaterial,
-      { name: 'AES-GCM', length: 256 },
-      true,
-      ['encrypt', 'decrypt']
+      { name: KEY_ALGO, length: KEY_LENGTH },
+      false,
+      ['encrypt']
     )
-    return true
+    return this._algorithm
+  }
+}
+
+export class Encrypt extends KeyApplication {
+  constructor (key) {
+    super()
+    this._algorithm = {
+      name: KEY_ALGO,
+      length: CRYPT_LENGTH,
+      iv: window.crypto.getRandomValues(new Uint8Array(16))
+    }
   }
 
-  async setIV (iv) {
-    this.algorithm.iv = iv
-    await this.initialized
-    return this.algorithm
+  async init () {
+    return this._initialized
   }
 
   async encrypt (message) {
-    return window.crypto.subtle.encrypt(this.algorithm, this.key, message)
+    return window.crypto.subtle.encrypt(this._algorithm, this._key, message)
+  }
+}
+
+export class Decrypt extends KeyApplication {
+  constructor () {
+    super()
+    this.notInitialized = true
+  }
+
+  async init (iv) {
+    this.notInitialized = this.initialized.then(_ => {
+      this._algorithm = {
+        name: KEY_ALGO,
+        length: CRYPT_LENGTH,
+        iv: window.crypto.getRandomValues(new Uint8Array(16))
+      }
+      return false
+    })
   }
 
   async decrypt (message) {
-    return window.crypto.subtle.decrypt(this.algorithm, this.key, message)
+    return window.crypto.subtle.decrypt(this._algorithm, this._key, message)
   }
 }
