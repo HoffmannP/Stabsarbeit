@@ -6,7 +6,7 @@ import fastapi
 import fastapi.middleware.cors
 import fastapi.responses
 import uvicorn  # type: ignore
-import Database
+import Database  # type: ignore
 
 
 PERIOD = 5 * 60
@@ -19,35 +19,16 @@ app.add_middleware(
     allow_methods=['POST', 'GET'],
     allow_headers=['Content-Type'])
 
-def user_session(session = fastapi.Cookie(default=None)):
-    if session is None:
-        raise fastapi.HTTPException(status_code=401, detail='Auth-Cookie missing')
-    userid = Database.user_session(session)
-    if userid is False:
-        raise fastapi.HTTPException(status_code=401, detail='Session invalid')
-    return userid
+@app.post('/add')
+async def add(entry: Database.Entry) -> typing.Dict[str, int]:
+    entryId = Database.add(entry)
+    if entryId is None:
+        raise fastapi.HTTPException(status_code=505, detail=f'Can not add entry {entry.id}')
+    return { 'entry': entryId }
 
-@app.post('/login')
-async def login(response: fastapi.Response, username = fastapi.Form(''), password = fastapi.Form('')) -> typing.Dict[str, str]:
-    token = Database.login(username, password)
-    if token is None:
-        return { 'error': 'error obtaining access token' }
-    response.set_cookie(key='session', value=token, expires=7200, httponly=True, samesite='None', secure=True)
-    return { 'access-token': token }
-
-@app.post('/register')
-async def register(username = fastapi.Form(''), name = fastapi.Form(''), password = fastapi.Form('')) -> typing.Dict[str, str]:
-    user_id = Database.register(username, name, password)
-    if user_id is None:
-        return { 'error': 'error registering user' }
-    return { 'registered': user_id }
-
-@app.get('/home')
-async def home(user_session = fastapi.Depends(user_session)) -> typing.Dict[str, str]:
-    user = Database.get_user(user_session)
-    return {
-        'username': user.username,
-        'name': user.name}
+@app.get('/load')
+async def load() -> typing.List[Database.Entry]:
+    return Database.load()
 
 @app.get('/update-database')
 async def update_database() -> typing.Dict[str, bool]:
