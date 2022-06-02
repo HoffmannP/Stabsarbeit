@@ -2,46 +2,62 @@
 
 import typing
 import logging
-import fastapi
-import fastapi.middleware.cors
-import fastapi.responses
-import uvicorn  # type: ignore
-import Database  # type: ignore
+import websockets # type: ignore
+import websockets.server  # type: ignore
 
+GAME: typing.Dict[str, websockets.server.WebSocketServerProtocol] = {}
 
-PERIOD = 5 * 60
+def broadcast(players, action, **data):
+    websockets.broadcast(players, json.dumps({
+            'action': action, **data}))
 
-app = fastapi.FastAPI()
-app.add_middleware(
-    fastapi.middleware.cors.CORSMiddleware,
-    allow_origins=['http://localhost:5000'],
-    allow_credentials=True,
-    allow_methods=['POST', 'GET'],
-    allow_headers=['Content-Type'])
+ALL_ENTRIES = [ ]
 
-@app.post('/add')
-async def add(entry: Database.Entry) -> typing.Dict[str, int]:
-    entryId = Database.add(entry)
-    if entryId is None:
-        raise fastapi.HTTPException(status_code=505, detail=f'Can not add entry {entry.id}')
-    return { 'entry': entryId }
+async def handler(websocket):
+    while True:
+        message = await websocket.recv()
+        await websocket.send(json.dumps({
+            'status': 'success',
+            'length': len(ALL_ENTRIES)
+        }))
 
-@app.get('/load')
-async def load() -> typing.List[Database.Entry]:
-    return Database.load()
+async def handler(websocket):
+    if (direction == 'sender') {
+        handleSender(websocket)
+    }
+    message = await websocket.recv()
+    try:
+        data = json.loads(message)
+    except ValueError:
+        return
 
-@app.get('/update-database')
-async def update_database() -> typing.Dict[str, bool]:
-    Database.update()
-    return { 'success': True }
+    assert data['action'] == 'start'
 
-# @app.on_event('startup')
-# @fastapi_utils.tasks.repeat_every(seconds=PERIOD)
-# async def regular_check() -> None:
-#     logging.info('check')
+    if 'key' in data and len(data['key']) > 3:
+        key = data['key']
+        if key in GAME:
+            print(f'Player 1 joining {key}')
+            await play(GAME[key], websocket)
+            del GAME[key]
+            print('Player 1 left the game')
+            return
+    else:
+        key = secrets.token_urlsafe()
+
+    GAME[key] = websocket
+    print(f'Player 0 joining {key}')
+    await websocket.send(json.dumps({
+        'action': 'invite',
+        'key': key}))
+
+    await websocket.wait_closed()
+    del GAME[key]
+    print('Player 0 left the game')
+
+async def main():
+    async with websockets.serve(handler, '', 5432):
+        await asyncio.Future()
 
 
 if __name__ == '__main__':
-    logging.basicConfig(format='%(asctime)s | %(levelname)s:     %(message)s', level=logging.INFO)
-    logging.info('Logging started')
-    uvicorn.run(app, host='0.0.0.0', port=5001)
+    asyncio.run(main())

@@ -13,7 +13,6 @@
             case 'send':
                 const se = new SyncSender(password)
                 await se.init(entries)
-                UIkit.modal.alert(`Die PeerId lautet <em>${peerId}</em>`)
                 onNewEntry(newEntry => {
                     console.log(newEntry)
                     return se.add(newEntry)

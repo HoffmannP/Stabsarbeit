@@ -1,11 +1,11 @@
 ###### Requirements without Version Specifiers ######
-uvicorn
-SQLAlchemy
-sqlalchemy[mypy]
-python-multipart
+# uvicorn
 # SQLAlchemy
+# sqlalchemy[mypy]
+# python-multipart
 # asgi-sessions
+websockets
 
 ###### Requirements with Version Specifiers ######
-fastapi >= 0.68
-fastapi_utils >= 0.2.1
+# fastapi >= 0.68
+# fastapi_utils >= 0.2.1
