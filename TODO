@@ -1,7 +1,6 @@
 Tabelleneinträge:
-    [ ] Neu starten / neuer Einsatz
-    [ ] Speichern im Server
-    [ ] Syncen mit anderer Instanz (welche Technik?)
+    [ ] Neu starten / neuer Einsatz (Liste leeren)
+    [✓] Syncen mit anderer Instanz (welche Technik?) @done(22-06-07 17:16)
     [ ] Metadaten
     [ ] Beenden
     [ ] Link zu GitHub, Autor, Lizenz @created(22-05-30 12:27)
@@ -41,3 +40,5 @@ Bugs:
     [✓] Tagebuchliste scrollt nicht @done(22-05-30 12:22)
     [✓] UIKitIcons ablösen @done(22-06-01 00:56)
     [ ] CD (assets directory setzen, rsync)
+    [ ] Syncen nur wenn noch keine Einträge vorhanden sind
+    [ ] Syncstatus anzeigen

@@ -1,5 +1,5 @@
 <script>
-    import { entries, onNewEntry, switchToReadMode } from './tagebuch'
+    import { entries, onNewEntry, editable } from './tagebuch'
     import { SyncSender, SyncReceiver } from './sync'
     import UIkit from 'uikit'
 
@@ -17,7 +17,7 @@
                 onNewEntry(newEntry => se.add(newEntry))
                 break
             case 'receive':
-                await switchToReadMode()
+                editable = false
                 const rc = new SyncReceiver(name, password)
                 rc.addEventListener('newEntry', newEntryEvent => {
                     ($entries = newEntryEvent.detail)
