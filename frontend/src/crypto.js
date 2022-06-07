@@ -27,7 +27,7 @@ class KeyApplication {
       keyMaterial,
       { name: KEY_ALGO, length: KEY_LENGTH },
       false,
-      ['encrypt']
+      ['encrypt', 'decrypt']
     )
     return this._algorithm
   }
@@ -43,8 +43,8 @@ export class Encrypt extends KeyApplication {
     }
   }
 
-  async init () {
-    return this._initialized
+  async init (callback) {
+    return this._initialized.then(callback || (_ => {}))
   }
 
   async encrypt (message) {
@@ -58,13 +58,9 @@ export class Decrypt extends KeyApplication {
     this.notInitialized = true
   }
 
-  async init (iv) {
-    this.notInitialized = this.initialized.then(_ => {
-      this._algorithm = {
-        name: KEY_ALGO,
-        length: CRYPT_LENGTH,
-        iv: window.crypto.getRandomValues(new Uint8Array(16))
-      }
+  async init (algorithm) {
+    this.notInitialized = this._initialized.then(_ => {
+      this._algorithm = algorithm
       return false
     })
   }

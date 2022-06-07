@@ -1,6 +1,6 @@
 <script>
     import { afterUpdate } from 'svelte';
-    import { entries } from './tagebuch'
+    import { entries, editable } from './tagebuch'
     import filter from './filter'
     import currentTime from './currentTime'
     import dtFormater from './dateTimeFormat'
@@ -51,7 +51,7 @@
             <td class="">{@html entry.text}</td>
         </tr>
         {/each}
-        <tr>
+        <tr class:uk-hidden={!$editable}>
             <th class="uk-table-shrink">{$entries.length + 1}</th>
             <td class="uk-text-primary">{$dtFormater($currentTime)}</td>
             <td><input bind:this={input} type="text" on:keypress={checkSubmit}></td>

@@ -1,5 +1,5 @@
 <script>
-    import { entries, onNewEntry } from './tagebuch'
+    import { entries, onNewEntry, switchToReadMode } from './tagebuch'
     import { SyncSender, SyncReceiver } from './sync'
     import UIkit from 'uikit'
 
@@ -8,23 +8,18 @@
 
     async function startSync () {
         const form = new FormData(this)
+        const name = form.get('uri').trim()
         const password = form.get('password')
         switch (form.get('direction')) {
             case 'send':
-                const se = new SyncSender(password)
+                const se = new SyncSender(name, password)
                 await se.init(entries)
-                onNewEntry(newEntry => {
-                    console.log(newEntry)
-                    return se.add(newEntry)
-                })
+                onNewEntry(newEntry => se.add(newEntry))
                 break
             case 'receive':
-                const uri = form.get('uri').trim()
-                console.log(uri)
-                const rc = new SyncReceiver(uri, password)
-                console.log(rc)
+                await switchToReadMode()
+                const rc = new SyncReceiver(name, password)
                 rc.addEventListener('newEntry', newEntryEvent => {
-                    console.log(newEntryEvent.detail)
                     ($entries = newEntryEvent.detail)
                 })
                 break
@@ -42,14 +37,12 @@
                 <label><input class="uk-radio" bind:group={direction} type="radio" value="send" name="direction"> Tagebuchführer</label>
                 <label><input class="uk-radio" bind:group={direction} type="radio" value="receive" name="direction"> Beobachter</label>
             </div>
-            {#if direction == 'receive'}
             <label class="uk-form-label">
-                PeerId <input class="uk-input" name="uri" autocomplete="uri" type="text">
+                Tagebuchname <input class="uk-input" name="uri" autocomplete="uri" type="text" placeholder="Einsatzort" required minlength="2">
             </label>
-            {/if}
             <input class="uk-input" name="username" autocomplete="username" type="text" value="Stabsarbeit" style="display:none">
             <label class="uk-form-label">
-                Passwort <input class="uk-input" name="password" autocomplete="current-password" type="password">
+                Passwort <input class="uk-input" name="password" autocomplete="current-password" type="password" required minlength="6">
             </label>
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button>

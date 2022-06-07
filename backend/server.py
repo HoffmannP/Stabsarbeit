@@ -1,63 +1,83 @@
 #!/usr/bin/env python3
 
+import asyncio
+import aiohttp.web
 import typing
+import json
 import logging
-import websockets # type: ignore
-import websockets.server  # type: ignore
+import collections
 
-GAME: typing.Dict[str, websockets.server.WebSocketServerProtocol] = {}
+Model = collections.namedtuple('Model', 'queues entries')
+Models: typing.Dict[str, Model] = {}
+logger = logging.getLogger('sse')
 
-def broadcast(players, action, **data):
-    websockets.broadcast(players, json.dumps({
-            'action': action, **data}))
+class ServerSentEventResponse (aiohttp.web.StreamResponse):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.headers['Cache-Control'] = 'no-store'
+        self.headers['Content-Type'] = 'text/event-stream'
+        self.headers['Access-Control-Allow-Origin'] = '*'
 
-ALL_ENTRIES = [ ]
+    async def send(self, data):
+        logger.info('[Sending.|%s] %s', self.name, data)
+        return await self.write(b'data: ' + data + b'\n\n')
 
-async def handler(websocket):
+async def handle_send(request):
+    name = request.match_info['name']
+    checkModel(name)
+
+    logger.info('[Listener|%s] %s', name, request.remote)
+    sse = ServerSentEventResponse(name)
+    await sse.prepare(request)
+
+    for entry in Models[name].entries:
+        await sse.send(entry)
+    queue = asyncio.Queue()
+    Models[name].queues.append(queue)
     while True:
-        message = await websocket.recv()
-        await websocket.send(json.dumps({
-            'status': 'success',
-            'length': len(ALL_ENTRIES)
-        }))
+        entry = await queue.get()
+        await sse.send(entry)
+        queue.task_done()
 
-async def handler(websocket):
-    if (direction == 'sender') {
-        handleSender(websocket)
-    }
-    message = await websocket.recv()
-    try:
-        data = json.loads(message)
-    except ValueError:
-        return
+async def handle_receive(request):
+    name = request.match_info['name']
+    checkModel(name)
 
-    assert data['action'] == 'start'
-
-    if 'key' in data and len(data['key']) > 3:
-        key = data['key']
-        if key in GAME:
-            print(f'Player 1 joining {key}')
-            await play(GAME[key], websocket)
-            del GAME[key]
-            print('Player 1 left the game')
-            return
+    entry = await request.content.read()
+    if entry == b'$flush$':
+        Models[name].entries.clear()
+        logger.info('[Flushing|%s]', name)
+        resp = aiohttp.web.Response(text=json.dumps({"result": "flush"}))
     else:
-        key = secrets.token_urlsafe()
+        logger.info('[Received|%s] %s', name, entry)
+        new_entry(name, entry)
+        resp = aiohttp.web.Response(text=json.dumps({"result": "success", "length": len(entry)}))
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
-    GAME[key] = websocket
-    print(f'Player 0 joining {key}')
-    await websocket.send(json.dumps({
-        'action': 'invite',
-        'key': key}))
+def new_entry(name, entry):
+    for queue in Models[name].queues:
+        queue.put_nowait(entry)
+    Models[name].entries.append(entry)
 
-    await websocket.wait_closed()
-    del GAME[key]
-    print('Player 0 left the game')
+def checkModel(name):
+    global Models
+    if name not in Models:
+        Models[name] = Model([], [])
 
-async def main():
-    async with websockets.serve(handler, '', 5432):
-        await asyncio.Future()
+
+def main():
+    logHandler = logging.StreamHandler()
+    logHandler.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
+    logHandler.setLevel(logging.INFO)
+    logger.setLevel(logging.INFO)
+    logger.addHandler(logHandler)
+    app = aiohttp.web.Application()
+    app.router.add_get('/{name}', handle_send)
+    app.router.add_post('/{name}', handle_receive)
+    aiohttp.web.run_app(app, port=5001)
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()

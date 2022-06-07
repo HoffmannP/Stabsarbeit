@@ -29,7 +29,7 @@ export class ClientLocalStorage {
 
 export class ClientIndexDB {
   constructor (name) {
-    const request = indexedDB.open(name)
+    const request = indexedDB.open(name, 1)
     request.addEventListener('upgradeneeded', this._upgrade)
     this.db = this._promiseResult(request)
   }
