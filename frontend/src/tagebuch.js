@@ -32,3 +32,12 @@ export const entries = {
 export const onNewEntry = rawEntries.subscribe
 
 window.setTimeout(_ => rawStorage.load().then(data => data.forEach(date => rawEntries.set(date))), 0)
+
+export const editable = writable(true)
+
+export function switchToReadMode () {
+  rawEntries.length = 0
+  processedEntries.set([])
+  editable.set(false)
+  await rawStorage.clear()
+}
