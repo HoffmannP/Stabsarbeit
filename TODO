@@ -1,18 +1,17 @@
 Tabelleneinträge:
     [ ] Neu starten / neuer Einsatz (Liste leeren)
-    [✓] Syncen mit anderer Instanz (welche Technik?) @done(22-06-07 17:16)
     [ ] Metadaten
-    [ ] Beenden
+    [ ] Beenden/Schließen/Fest
     [ ] Link zu GitHub, Autor, Lizenz @created(22-05-30 12:27)
+    [✓] Syncen mit anderer Instanz (welche Technik?) @done(22-06-07 17:16)
 
 Tagebuch:
     [✓] speichern im Browser @done(22-05-23 12:00)
     [✓] exportieren @done(22-05-24 15:00)
     [✓] filtern @done(22-05-30 10:15)
-    [ ] referenzieren
-    [ ] editieren @maybe
-    [ ] löschen & ersetzen @maybe
-    [ ] Einheitendisponierungsseite
+    [ ] Eintrag referenzieren
+    [ ] Eintrag löschen (Schaltfläche, Anzeigen, Intern dokumentieren)
+    [ ] Eintrag ersetzen (Schaltfläche, Anzeigen, Intern dokumentieren)
 
 Einheiten:
     [✓] erkennen @done(22-05-25 00:43)
@@ -28,6 +27,7 @@ Einheiten:
     [ ] Vorladen/Speichern
         [ ] Autom. Haus und Fahrzeugtyp anzeigen
         [ ] Einheitsgruppen (Lösch-/Gefahrgutzug)
+    [ ] Einheitendisponierungsseite
 
 Einsätze:
     [✓] erkennen @done(22-05-30 11:59)
