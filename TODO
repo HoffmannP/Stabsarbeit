@@ -1,17 +1,27 @@
 Tabelleneinträge:
     [ ] Neu starten / neuer Einsatz (Liste leeren)
+        Workflow: Prüfen ob alte Einsatzdaten vorhanden sind
+        ja: fortsetzen?
+            ja: Einsatz mit bekanntem Stichwort fortsetzen
+            nein: vorhandene Daten löschen
+        Modus abfragen:
+            Schreiber:
+                Abfrage Einsatzstichwort/Ort
+                Soll synchronisiert werden?
+                ja: Synchro starten
+            Leser:
+                Synchro starten
     [ ] Metadaten
     [ ] Beenden/Schließen/Fest
-    [ ] Link zu GitHub, Autor, Lizenz @created(22-05-30 12:27)
+    [ ] Link zu GitHub, Autor, Lizenz
     [✓] Syncen mit anderer Instanz (welche Technik?) @done(22-06-07 17:16)
 
 Tagebuch:
+    [ ] Eintrag referenzieren
+    [ ] Eintrag löschen & ersetzen (Schaltfläche, Anzeigen, Intern dokumentieren)
     [✓] speichern im Browser @done(22-05-23 12:00)
     [✓] exportieren @done(22-05-24 15:00)
     [✓] filtern @done(22-05-30 10:15)
-    [ ] Eintrag referenzieren
-    [ ] Eintrag löschen (Schaltfläche, Anzeigen, Intern dokumentieren)
-    [ ] Eintrag ersetzen (Schaltfläche, Anzeigen, Intern dokumentieren)
 
 Einheiten:
     [✓] erkennen @done(22-05-25 00:43)
