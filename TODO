@@ -1,16 +1,5 @@
 Tabelleneinträge:
     [ ] Neu starten / neuer Einsatz (Liste leeren)
-        Workflow: Prüfen ob alte Einsatzdaten vorhanden sind
-        ja: fortsetzen?
-            ja: Einsatz mit bekanntem Stichwort fortsetzen
-            nein: vorhandene Daten löschen
-        Modus abfragen:
-            Schreiber:
-                Abfrage Einsatzstichwort/Ort
-                Soll synchronisiert werden?
-                ja: Synchro starten
-            Leser:
-                Synchro starten
     [ ] Metadaten
     [ ] Beenden/Schließen/Fest
     [ ] Link zu GitHub, Autor, Lizenz

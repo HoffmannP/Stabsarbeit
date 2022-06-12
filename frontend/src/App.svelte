@@ -5,6 +5,7 @@ import active from 'svelte-spa-router/active'
 
 import NotFound from './NotFound.svelte'
 
+import Start from './Start.svelte'
 import Tagebuch from './Tagebuch.svelte'
 import Einsätze from './Einsätze.svelte'
 import Einheiten from './Einheiten.svelte'
@@ -18,6 +19,7 @@ const globalProp = component => wrap({ component, props: {
 }})
 
 const routes = {
+    '/': globalProp(Start),
     '/tagebuch': globalProp(Tagebuch),
     '/einsaetze': globalProp(Einsätze),
     '/einheiten': globalProp(Einheiten),

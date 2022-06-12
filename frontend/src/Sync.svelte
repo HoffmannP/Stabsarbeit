@@ -17,7 +17,7 @@
                 onNewEntry(newEntry => se.add(newEntry))
                 break
             case 'receive':
-                editable = false
+                $editable = false
                 const rc = new SyncReceiver(name, password)
                 rc.addEventListener('newEntry', newEntryEvent => {
                     ($entries = newEntryEvent.detail)
