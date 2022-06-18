@@ -3,15 +3,17 @@
     import UIkit from 'uikit'
     import currentTime from './currentTime'
     import { dateFormater } from './dateTimeFormat'
-    import { PlusIcon, MinusIcon } from 'svelte-feather-icons'
+    import { MinusIcon, PlusIcon, PlayIcon } from 'svelte-feather-icons'
 
-    const meta = {}
+    let meta = []
+    let addPropertyInput
     let modal
     let step = 3
 
     onMount(_ => {
         const uimodal = UIkit.modal(modal)
         uimodal.show()
+        console.log(meta)
     })
 
     function inc () {
@@ -24,11 +26,16 @@
     }
 
     function add() {
-        meta[`Eigenschaft ${Object.values(meta).length}`] = ""
+        meta = [...meta, addPropertyInput.value.trim()]
+        addPropertyInput.value = ''
     }
 
-    function remove(name) {
-        delete meta[name]
+    function remove(i) {
+        meta = [...meta.slice(0, i), ...meta.slice(i + 1)]
+    }
+
+    function start() {
+
     }
     /*
     Workflow: Prüfen ob alte Einsatzdaten vorhanden sind
@@ -77,28 +84,59 @@
                 </div>
                 <div class="metainformation" class:uk-hidden={step != 3}>
                     <p class="uk-text-lead">Einsatz anlegen</p>
-                    <form class="uk-form-stacked">
-                        <label class="uk-form-label">
-                            Einsatzleitung <input class="uk-input" type="text">
-                        </label>
-                        <label class="uk-form-label">
-                            Tagebuchführung <input class="uk-input" type="text">
-                        </label>
-                        <label class="uk-form-label">
-                            Datum <input class="uk-input" type="text" value="{dateFormater($currentTime)}" disabled>
-                        </label>
-                        <label class="uk-form-label">
-                            Einsatzstichwort <input class="uk-input" type="text">
-                        </label>
-                        {#each Object.entries(meta) as name, value}
-                            <label class="uk-form-label">
-                                <span editable>{{name}}</span> <input class="uk-input" type="text" value="{value}">
-                            </label>
-                            <button type="button" class="uk-button uk-button-default uk-button-small" on:click={remove(name)}><MinusIcon size="20" /></button>
+                    <form class="uk-form-horizontal">
+                        <div class="uk-margin">
+                            <label for="leader" class="uk-form-label">Einsatzleitung</label>
+                            <div class="uk-form-controls">
+                                <input id="leader" class="uk-input" type="text">
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <label for="writer" class="uk-form-label">Tagebuchführung</label>
+                            <div class="uk-form-controls">
+                                <input id="writer" class="uk-input" type="text">
+                            </div>
+                        </div>
+                        {#each Array.from(meta) as prop, i}
+                        <div class="uk-margin">
+                            <label for={`id_${prop}`} class="uk-form-label">{prop}</label>
+                            <div class="uk-form-controls uk-grid">
+                                <input id={`id_${prop}`} class="uk-input uk-width-expand uk-margin-right" type="text">
+                                <button type="button" class="uk-button uk-button-default" on:click={_ => remove(i)} style="padding-left:30px;">
+                                    <MinusIcon size="20" />
+                                </button>
+                            </div>
+                        </div>
                         {/each}
-                        <button type="button" class="uk-button uk-button-default uk-button-small" on:click={add()}>
-                            <PlusIcon size="20" /> weitere Zeile
-                        </button>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" style="margin-top:0;">
+                                <input bind:this={addPropertyInput} class="uk-input" type="text">
+                            </label>
+                            <div class="uk-form-controls">
+                                <button type="button" class="uk-button uk-button-default" on:click={add}>
+                                    <PlusIcon size="20" /> hinzufügen
+                                </button>
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <label for="date" class="uk-form-label">Datum</label>
+                            <div class="uk-form-controls">
+                                <input id="date" class="uk-input" type="text" value="{dateFormater($currentTime)}" disabled>
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <label for="keyword" class="uk-form-label">Einsatzstichwort</label>
+                            <div class="uk-form-controls">
+                                <input id="keyword" class="uk-input" type="text">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-form-controls">
+                                <button type="button" class="uk-button uk-button-primary" on:click={start}>
+                                    <PlayIcon size="20" /> Tagebuch anlegen
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
